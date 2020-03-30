@@ -14,16 +14,15 @@ node() {
 
         stage('read input file') {
             def line = readFile(file: 'input_file')
-               service = line.split(': ')[0]
+               service = line.split(':')[0]
                tag = line.split(':')[1]
                 def deploy  = [:]
                 deploy[service] = tag
 
 
-             def build = [learner:'learner_build',portal:'player_build',lp:'learning']
+            def build = [learner:'learner_build',portal:'player',lp:'learning']
 
             for (entry in deploy) {
-                    println("$entry.key : $entry.value")
                     service_to_deploy = "$entry.key"
                     build_tag = "$entry.value"
                     build_job = build[service_to_deploy]
@@ -32,6 +31,8 @@ node() {
 
               }
 
-        }    
+        }
+
+        
         
 }
