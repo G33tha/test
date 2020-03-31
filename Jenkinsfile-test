@@ -4,7 +4,7 @@ pipeline {
         stage('Deploy') {
             when { tag "tag-*" }
             steps {
-                echo 'Deploying only because this commit is tagged...'
+                echo 'Deploying only because this commit is tagged'
                 echo 'hellow world'
             }
         }
