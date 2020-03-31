@@ -1,3 +1,10 @@
+
+def trigger_build(job_name,tag) {
+    println("triggering build " + job_name + " from the tag " + tag) 
+    build(job: "Build/$job_name", parameters: [string(name: 'github_release_tag', value: "$tag")],wait: false)
+}
+           
+
 node() {
          
         stage('checkout repo') {
@@ -12,7 +19,7 @@ node() {
             
         }    
 
-        stage('read input file') {
+        stage('read input file and trigger build') {
             def line = readFile(file: 'input_file')
                service = line.split(':')[0]
                tag = line.split(':')[1]
@@ -27,12 +34,10 @@ node() {
                     build_tag = "$entry.value"
                     build_job = build[service_to_deploy]
                     println(build_job)
-                    
-
+                    trigger_build(build_job,build_tag)
               }
 
         }
-
         
         
 }
