@@ -3,6 +3,8 @@ pipeline {
     stages {
         stage('Deploy') {
             when { tag "tag-*" }
+            jobName = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-1].trim()
+            println(jobName)
             steps {
                 echo 'Deploying only because this commit is tagged.....'
                 echo 'hellow world'
